@@ -1,35 +1,117 @@
-## Simulate the Milky Way to learn astronomy and understand the physics behind it with relevant equations, visualizations (graphs, charts, etc.) as a dropdown option for each feature.
+# Sustainability Buddy
 
-## Problem
-Students often struggle to grasp the vastness of the universe through traditional teaching methods. Current educational tools lack interactive elements, leaving learners feeling disconnected from the cosmic scale of astronomical phenomena like constellations and planets.
+## Transform daily choices into measurable impact
 
-## Solution
-Galactic Explorer is an interactive application that simulates the Milky Way galaxy, allowing users to explore constellations, stars, and planets while providing educational facts about each astronomical feature.
+## Vision
+Sustainability Buddy is a personalized climate empowerment app that connects **education, daily habits, and community participation** into one seamless experience.  
+It helps users understand the environmental challenges facing their region, shows how their individual actions contribute to collective impact, and connects them directly to local opportunities for sustainable living.
 
-## Who
-Middle school science teachers looking for engaging ways to teach astronomy. Curious individuals wanting to know more about the massive world beyond.
+---
 
+## Big Picture Goals
+1. **Educate:** Explain local climate vulnerabilities (droughts, floods, heatwaves, etc.) based on user location, making sustainability relevant and personal.  
+2. **Empower:** Provide personalized, actionable tips and track measurable impact over time.  
+3. **Connect:** Aggregate local sustainability events and organizations to foster real-world engagement.  
+4. **Enable:** Offer the most sustainable routes for users traveling to events or daily destinations.  
+5. **Inspire:** Reduce eco-anxiety by showing clearly how individual and collective actions make a difference.
+
+---
+
+## Core Components
+
+### 1. Personalized Educational Insights
+- Uses geolocation and environmental datasets to identify local climate risks.  
+- Provides short explainers on the causes, effects, and human significance of each issue.  
+- Links education directly to action-oriented suggestions.  
+  - *Example:* “Your region faces recurring droughts. Here’s why it matters — and how switching to drought-tolerant plants can help conserve water locally.”
+
+---
+
+### 2. Community Impact & Learning Dashboard
+- Displays real-time metrics on each user’s saved emissions, water, energy, and waste reduction.  
+- Illustrates collective community progress (“Your city saved the equivalent of 200 homes’ daily energy use”).  
+- Connects actions with the *why* behind them, reinforcing learning through visible contribution.
+
+---
+
+### 3. Event Aggregator & Local Sustainability Map
+- **Organization Integration:** Sustainability-focused nonprofits, local governments, and green businesses can sync their calendars or upload events directly.  
+- **Event Categories:** Farmers’ markets, recycling drives, repair cafés, clothing swaps, sustainability workshops, and volunteer cleanups.  
+- **User Experience:**  
+  - Discover nearby events filtered by category, date, or distance.  
+  - View each event’s environmental focus (e.g., waste reduction, local food, conservation).  
+  - RSVP or share interest in-app.  
+- Turns Sustainability Buddy into a community hub for local climate-positive activities.
+
+---
+
+### 4. Sustainable Route Planner
+- Calculates the **most eco-friendly travel route** to events or destinations.  
+- Considers walking, biking, public transit, or low-emission travel methods.  
+- Shows approximate emission savings compared to driving alone.  
+  - *Example:* “Taking this transit route saves ~1.2 kg CO₂ compared to a solo car trip.”  
+- Integrates with map and transportation APIs for accurate distance and time estimation.
+
+---
+
+### 5. Collective Challenges & Group Pledges *(Future Phase)*
+- Users can join themed community challenges (“Plastic-Free Month,” “Low-Waste Market Challenge”).  
+- Tracks group metrics (emissions saved, hours volunteered, goods exchanged).  
+- Builds accountability, purpose, and social connection.
+
+---
+
+## Target Users
+- Gen Z / Millennial individuals seeking **to learn, act, and connect** around sustainability.  
+- People experiencing **climate anxiety** who want realistic engagement pathways.  
+- Local nonprofits and environmental orgs looking to reach broader audiences.
+
+---
 
 ## Why Now
-With advancements in technology and increased interest in STEM education, there’s a growing demand for engaging, interactive learning tools that can capture students' imaginations.
+Public concern about climate change is at an all-time high — but many lack clear, positive avenues for action.  
+Sustainability Buddy delivers **localized, AI-personalized education** and connects it to tangible opportunities.  
+Emerging technologies in mapping and environmental data make it possible to personalize sustainability with precision and empathy.
 
-## User Story
-As a middle school science teacher, I want to use an interactive Milky Way simulation, so that my students can better understand the scale and beauty of the universe.
+---
 
-## MVP Features
-1. Interactive 3D Milky Way model with zoom capabilities
-2. Clickable constellations that reveal educational facts
-3. Search function for specific stars and planets with detailed info
-4. Dynamic visuals that simulate the motion of celestial bodies
-5. User-friendly interface with guided tours of the galaxy
+## MVP Scope
+The MVP focuses on testing three key pillars:
 
-## Out of Scope
-- In-depth astrophysics simulations
-- Real-time updates of astronomical events
-- Augmented reality features
+1. **Education:**  
+   - Geo-tailored climate insights and short explainers (mock data for demo).  
 
-## Design & Vibe
-Web-based platform with a clean, professional aesthetic. Inspired by educational tools like NASA's Eyes on the Solar System for interactive elements, and Google Earth for navigation. Cool color palette with deep blues and purples to evoke the cosmos, paired with friendly, approachable typography. The tone is educational yet engaging, encouraging curiosity about the universe.
+2. **Engagement:**  
+   - Event aggregator map with sample synced events from sustainability partners.  
 
-## Start Here
-Begin by building a simple web prototype of the interactive 3D Milky Way model using static images and placeholder text for educational facts. Focus on creating an engaging zoom feature to explore the galaxy, using mock data for stars and constellations. Avoid backend integration for now and concentrate on testing the visual experience and user engagement.
+3. **Enablement:**  
+   - Sustainable route calculation using emissions comparison logic.  
+
+**Success Metrics:**  
+- Users feel more informed about local climate risks.  
+- Users discover and engage with local sustainability events.  
+- Users express motivation and emotional relief through visible, collective progress.
+
+---
+
+## Design & Tone
+- **Tone:** Hopeful, supportive, and fact-based — turning concern into empowerment.  
+- **UI Aesthetic:** Minimal, nature-inspired design with interactive maps and clean data visuals.  
+- **Color Palette:** Calming greens, blues, and neutrals.  
+- **Voice:** Friendly and approachable, structured like a helpful companion or coach.
+
+---
+
+## Future Extensions
+- Full educational library with modular learning paths and micro-quizzes.  
+- Verified nonprofit partnerships for event contribution and volunteer sign-ups.  
+- AI “eco-coach” that explains the *why behind the what* for recommended habits.  
+- Real-time weather and climate alerts paired with contextual learning.  
+- Integration of group pledges and neighborhood sustainability tournaments.
+
+---
+
+## Summary: Mission Statement
+**Sustainability Buddy** transforms climate awareness into *informed local action.*  
+By blending contextual education, community connection, and sustainable mobility, it helps people see that *knowledge and participation at the local level add up to global impact.*  
+The app’s mission is to **educate, empower, and connect** — turning climate concern into measurable collective change.

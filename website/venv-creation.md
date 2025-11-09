@@ -26,6 +26,26 @@ venv\Scripts\activate  # Windows
   pip install fastapi uvicorn[standard]
   ```
 
+#### AI/LLM Integration
+- [ ] **OpenAI SDK** - For connecting to Duke's LiteLLM Enterprise Gateway
+  ```bash
+  pip install openai==1.98.0
+  ```
+  **Note:** Duke's LiteLLM gateway works seamlessly with the OpenAI SDK:
+  ```python
+  from openai import OpenAI
+  
+  client = OpenAI(
+      api_key=os.getenv("LITELLM_TOKEN"),
+      base_url="https://litellm.oit.duke.edu/v1",
+  )
+  
+  response = client.chat.completions.create(
+      model="GPT 4.1 Mini",  # Your model name
+      messages=[...]
+  )
+  ```
+
 #### Database & ORM
 - [ ] **SQLAlchemy** - SQL toolkit and ORM
   ```bash

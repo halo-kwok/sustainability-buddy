@@ -1,38 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import './App.css'
-// TEMPORARY: Test component - delete after testing
-import TestAI from './test/testAI.jsx'
+import Onboarding from './pages/Onboarding.jsx'
+import Home from './pages/Home.jsx'
+import Profile from './pages/Profile.jsx'
+import Chat from './pages/Chat.jsx'
+import ActionTracker from './pages/ActionTracker.jsx'
+import Events from './pages/Events.jsx'
+import userProfile from './utils/userProfile.js'
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    // Check if user needs onboarding
+    userProfile.loadFromStorage();
+  }, []);
 
   return (
     <>
-      {/* TEMPORARY: Test AI Component - Remove after testing */}
-      <TestAI />
-      
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route 
+          path="/onboarding" 
+          element={<Onboarding />} 
+        />
+        <Route 
+          path="/home" 
+          element={<Home />} 
+        />
+        <Route 
+          path="/profile" 
+          element={<Profile />} 
+        />
+        <Route 
+          path="/chat" 
+          element={<Chat />} 
+        />
+        <Route 
+          path="/actions" 
+          element={<ActionTracker />} 
+        />
+        <Route 
+          path="/events" 
+          element={<Events />} 
+        />
+        <Route 
+          path="/" 
+          element={
+            userProfile.onboardingComplete ? 
+              <Navigate to="/home" replace /> : 
+              <Navigate to="/onboarding" replace />
+          } 
+        />
+      </Routes>
     </>
   )
 }

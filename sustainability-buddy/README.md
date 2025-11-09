@@ -1,16 +1,106 @@
-# React + Vite
+# Sustainability Buddy 🌱
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personalized AI-powered sustainability coaching web application built with React, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🤖 **Agentic AI Coach** - Personalized sustainability advice powered by GPT-4.1-mini via Duke's LiteLLM gateway
+- 📊 **Action Tracker** - Track your sustainability actions and see your impact
+- 💬 **Interactive Chat** - Have conversations with your AI sustainability coach
+- 📅 **Local Events** - Discover sustainability events near you
+- 📈 **Impact Dashboard** - Visualize your CO₂, water, and waste savings
+- 🎯 **Personalized Suggestions** - AI-generated recommendations based on your routine and preferences
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React 19, Vite 7
+- **Styling:** Tailwind CSS 3
+- **Routing:** React Router DOM 7
+- **Icons:** Lucide React
+- **AI:** GPT-4.1-mini via Duke's LiteLLM Enterprise Gateway
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js 18+ and npm
+- LiteLLM API credentials from Duke
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd sustainability-buddy
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   VITE_LITELLM_API_KEY=your_api_key_here
+   VITE_LITELLM_GATEWAY_URL=https://litellm.oit.duke.edu/v1
+   VITE_LITELLM_MODEL=GPT 4.1 Mini
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+   The app will be available at `http://localhost:5173`
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+
+## Deployment
+
+This project is configured for easy deployment to Netlify. See [NETLIFY_DEPLOY.md](./NETLIFY_DEPLOY.md) for detailed deployment instructions.
+
+### Quick Deploy to Netlify
+
+1. Push your code to GitHub/GitLab/Bitbucket
+2. Connect your repository to Netlify
+3. Set environment variables in Netlify dashboard
+4. Deploy!
+
+The `netlify.toml` file is already configured with the correct build settings.
+
+## Project Structure
+
+```
+sustainability-buddy/
+├── public/              # Static assets (images, redirects)
+├── src/
+│   ├── components/      # React components
+│   ├── pages/           # Page components
+│   ├── utils/           # Utility functions (AI, user profile)
+│   └── main.jsx         # Entry point
+├── netlify.toml         # Netlify configuration
+└── package.json         # Dependencies
+```
+
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `VITE_LITELLM_API_KEY` | LiteLLM API key | Yes |
+| `VITE_LITELLM_GATEWAY_URL` | LiteLLM gateway URL | Yes |
+| `VITE_LITELLM_MODEL` | AI model name | No (defaults to "GPT 4.1 Mini") |
+
+## License
+
+This project is part of the Duke AI Hackathon 2025.
+
+## Support
+
+For issues or questions, please open an issue in the repository.

@@ -1,0 +1,6 @@
+# Netlify SPA Redirect Rules
+# This file ensures all routes are handled by the React Router
+# The netlify.toml also includes redirects, but this is a backup
+
+/*    /index.html   200
+

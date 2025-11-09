@@ -17,7 +17,7 @@ This file handles system prompt generation, API communication, proactive suggest
 Create a `.env` file in the project root with:
 ```
 VITE_LITELLM_API_KEY=your_api_key_here
-VITE_LITELLM_GATEWAY_URL=https://your-duke-litellm-gateway-url.com
+VITE_LITELLM_GATEWAY_URL=https://litellm-01.oit.duke.edu/
 ```
 
 **Note:** The gateway URL should point to Duke's LiteLLM Enterprise Edition endpoint.  

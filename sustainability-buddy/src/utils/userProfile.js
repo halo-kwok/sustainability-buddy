@@ -132,6 +132,54 @@ class UserProfile {
   }
 
   /**
+   * Clear all profile data and reset to defaults
+   * Used for logout functionality
+   * 
+   * @returns {UserProfile} Returns this for method chaining
+   */
+  clearProfile() {
+    // Reset to default values
+    this.routine = {
+      commuteMethod: null,
+      commuteTime: null,
+      dietType: null,
+      shoppingDay: null,
+      workSchedule: null
+    };
+
+    this.preferences = {
+      budget: "medium",
+      timeCommitment: "moderate",
+      priorities: []
+    };
+
+    this.history = {
+      actions: [],
+      rejections: [],
+      totalImpact: {
+        co2: 0,
+        water: 0,
+        waste: 0
+      }
+    };
+
+    this.userName = "";
+    this.onboardingComplete = false;
+    this.lastActive = null;
+
+    // Remove from localStorage
+    try {
+      localStorage.removeItem("sbUserProfile");
+      // Also clear chat history
+      localStorage.removeItem("sbChatHistory");
+    } catch (error) {
+      console.error("Error clearing profile from storage:", error);
+    }
+
+    return this;
+  }
+
+  /**
    * Update routine information
    * Merges new data with existing routine without overwriting other fields
    * 
@@ -155,17 +203,20 @@ class UserProfile {
    * @param {string} action - Description of the action taken
    * @param {boolean} success - Whether the action was successful
    * @param {string} feedback - Optional feedback about the action
+   * @param {Object} options - Optional parameters: { difficulty, impact }
    * @returns {Object} The created action record
    */
-  addAction(action, success, feedback = "") {
-    const impact = this.estimateImpact(action);
+  addAction(action, success, feedback = "", options = {}) {
+    // Use provided impact or estimate it
+    const impact = options.impact || this.estimateImpact(action);
     
     const actionRecord = {
       action,
       date: new Date().toISOString(),
       success,
       feedback,
-      impact
+      impact,
+      difficulty: options.difficulty || 'Medium'
     };
 
     this.history.actions.push(actionRecord);

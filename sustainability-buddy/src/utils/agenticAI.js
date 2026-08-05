@@ -3,12 +3,16 @@
  * 
  * This module powers an agentic AI sustainability coach that:
  * - Generates personalized system prompts based on user profile
- * - Communicates with GPT-4.1-mini via Duke's LiteLLM Enterprise Edition gateway
+ * - Communicates with Gemini via Google AI Studio (OpenAI-compatible API)
  * - Provides proactive suggestions and learns from user feedback
  * - Adapts to user's routine, preferences, and history
  */
 
 import userProfile from './userProfile.js';
+
+const GEMINI_OPENAI_ENDPOINT =
+  'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
+const GEMINI_MODEL = 'gemini-3.6-flash';
 
 /**
  * Builds a comprehensive system prompt for the AI sustainability coach
@@ -58,7 +62,7 @@ Response Style:
 }
 
 /**
- * Calls GPT-4.1-mini via Duke's LiteLLM Enterprise Edition gateway
+ * Calls Gemini via Google AI Studio's OpenAI-compatible chat completions API
  * Sends user message with conversation history and personalized system prompt
  * 
  * @param {string} userMessage - The user's message/query
@@ -71,27 +75,17 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
     const systemPrompt = buildSystemPrompt(userProfile);
     
     // Get API configuration from environment variables
-    const apiKey = import.meta.env.VITE_LITELLM_API_KEY;
-    const gatewayUrl = import.meta.env.VITE_LITELLM_GATEWAY_URL;
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
     // Validate environment variables
-    if (!apiKey || !gatewayUrl) {
-      console.error('Missing API configuration:', {
-        hasApiKey: !!apiKey,
-        hasGatewayUrl: !!gatewayUrl
-      });
-      throw new Error("Missing API key or gateway URL. Please check your .env file.");
+    if (!apiKey) {
+      console.error('Missing API configuration: VITE_GEMINI_API_KEY is not set');
+      throw new Error("Missing Gemini API key. Please check your .env file.");
     }
-
-    // Construct the full endpoint URL
-    // LiteLLM uses OpenAI-compatible /v1/chat/completions endpoint
-    const endpoint = gatewayUrl.endsWith('/') 
-      ? `${gatewayUrl}v1/chat/completions`
-      : `${gatewayUrl}/v1/chat/completions`;
 
     // Prepare the request payload in OpenAI-compatible format
     const payload = {
-      model: "gpt-4.1-mini",
+      model: GEMINI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
         ...conversationHistory,
@@ -101,8 +95,8 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
       max_tokens: 1000,   // Limit response length for cost efficiency
     };
 
-    // Make API request to LiteLLM gateway
-    const response = await fetch(endpoint, {
+    // Make API request to Google AI Studio
+    const response = await fetch(GEMINI_OPENAI_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +108,7 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
     // Handle HTTP errors
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('LiteLLM API error:', {
+      console.error('Gemini API error:', {
         status: response.status,
         statusText: response.statusText,
         error: errorText
@@ -139,7 +133,7 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
     console.error("Error in callAgenticAI:", err);
     
     // Return user-friendly error message
-    if (err.message.includes("Missing API key") || err.message.includes("gateway URL")) {
+    if (err.message.includes("Missing Gemini API key")) {
       return "Sorry, the AI service is not properly configured. Please check your API settings.";
     }
     
@@ -161,4 +155,3 @@ export function getTimeContext() {
     date: now.toLocaleDateString('en-US')
   };
 }
-

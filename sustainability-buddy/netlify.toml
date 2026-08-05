@@ -9,9 +9,7 @@
   publish = "dist"
   
   # Environment variables for build (these should be set in Netlify dashboard)
-  # VITE_LITELLM_API_KEY - Your LiteLLM API key
-  # VITE_LITELLM_GATEWAY_URL - Duke's LiteLLM gateway URL (e.g., https://litellm.oit.duke.edu/v1)
-  # VITE_LITELLM_MODEL - Model name (e.g., "GPT 4.1 Mini")
+  # VITE_GEMINI_API_KEY - Your Google AI Studio API key
 
 # Redirect rules for SPA routing
 # All routes should redirect to index.html for client-side routing

@@ -3,12 +3,16 @@
  * 
  * This module powers an agentic AI sustainability coach that:
  * - Generates personalized system prompts based on user profile
- * - Communicates with AI models (configured via VITE_LITELLM_MODEL) via Duke's LiteLLM Enterprise Edition gateway
+ * - Communicates with Gemini via Google AI Studio (OpenAI-compatible API)
  * - Provides proactive suggestions and learns from user feedback
  * - Adapts to user's routine, preferences, and history
  */
 
 import userProfile from './userProfile.js';
+
+const GEMINI_OPENAI_ENDPOINT =
+  'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
+const GEMINI_MODEL = 'gemini-3.6-flash';
 
 /**
  * Builds a comprehensive system prompt for the AI sustainability coach
@@ -128,7 +132,7 @@ Remember: Every suggestion must be personalized to THIS user's specific situatio
 }
 
 /**
- * Calls AI model (configured via VITE_LITELLM_MODEL) via Duke's LiteLLM Enterprise Edition gateway
+ * Calls Gemini via Google AI Studio's OpenAI-compatible chat completions API
  * Sends user message with conversation history and personalized system prompt
  * 
  * @param {string} userMessage - The user's message/query
@@ -141,61 +145,25 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
     const systemPrompt = buildSystemPrompt(userProfile);
     
     // Get API configuration from environment variables
-    const apiKey = import.meta.env.VITE_LITELLM_API_KEY;
-    const gatewayUrl = import.meta.env.VITE_LITELLM_GATEWAY_URL;
-    const model = import.meta.env.VITE_LITELLM_MODEL || "GPT 4.1 Mini"; // Default fallback
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
     // Validate environment variables
-    if (!apiKey || !gatewayUrl) {
-      console.error('Missing API configuration:', {
-        hasApiKey: !!apiKey,
-        hasGatewayUrl: !!gatewayUrl
-      });
-      throw new Error("Missing API key or gateway URL. Please check your .env file.");
+    if (!apiKey) {
+      console.error('Missing API configuration: VITE_GEMINI_API_KEY is not set');
+      throw new Error("Missing Gemini API key. Please check your .env file.");
     }
 
-    // Warn if gateway URL looks like direct Azure OpenAI (not LiteLLM gateway)
-    if (gatewayUrl.includes('openai.azure.com') && !gatewayUrl.includes('/v1/')) {
-      console.warn('⚠️ Gateway URL appears to be Azure OpenAI directly. Make sure you are using the LiteLLM gateway URL, not the Azure OpenAI endpoint directly.');
-    }
-
-    // Construct the full endpoint URL
-    // LiteLLM uses OpenAI-compatible /v1/chat/completions endpoint
-    // Ensure gateway URL has protocol and doesn't already include the path
-    let baseUrl = gatewayUrl.trim();
-    if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
-      baseUrl = `https://${baseUrl}`;
-    }
-    // Remove trailing slash
-    baseUrl = baseUrl.replace(/\/$/, '');
-    
-    // Construct endpoint - handle different gateway URL formats
-    let endpoint;
-    if (baseUrl.includes('/v1/chat/completions')) {
-      // Gateway URL already includes full path
-      endpoint = baseUrl;
-    } else if (baseUrl.endsWith('/v1')) {
-      // Gateway URL ends with /v1, just add /chat/completions
-      endpoint = `${baseUrl}/chat/completions`;
-    } else if (baseUrl.includes('/v1')) {
-      // Gateway URL has /v1 somewhere, add /chat/completions
-      endpoint = `${baseUrl}/chat/completions`;
-    } else {
-      // Gateway URL doesn't have /v1, add full path
-      endpoint = `${baseUrl}/v1/chat/completions`;
-    }
-
-    // Log endpoint for debugging
+    // Log request for debugging
     console.log('API Request Details:', {
-      endpoint,
-      model,
+      endpoint: GEMINI_OPENAI_ENDPOINT,
+      model: GEMINI_MODEL,
       hasApiKey: !!apiKey,
       messageLength: userMessage.length
     });
 
     // Prepare the request payload in OpenAI-compatible format
     const payload = {
-      model: model,
+      model: GEMINI_MODEL,
       messages: [
         { role: "system", content: systemPrompt },
         ...conversationHistory,
@@ -205,8 +173,8 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
       max_tokens: 1000,   // Limit response length for cost efficiency
     };
 
-    // Make API request to LiteLLM gateway
-    const response = await fetch(endpoint, {
+    // Make API request to Google AI Studio
+    const response = await fetch(GEMINI_OPENAI_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -218,7 +186,7 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
     // Handle HTTP errors
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('LiteLLM API error:', {
+      console.error('Gemini API error:', {
         status: response.status,
         statusText: response.statusText,
         error: errorText
@@ -245,19 +213,18 @@ export async function callAgenticAI(userMessage, conversationHistory = []) {
       message: err.message,
       stack: err.stack,
       name: err.name,
-      apiKey: import.meta.env.VITE_LITELLM_API_KEY ? "***set***" : "MISSING",
-      gatewayUrl: import.meta.env.VITE_LITELLM_GATEWAY_URL || "MISSING",
-      model: import.meta.env.VITE_LITELLM_MODEL || "MISSING"
+      apiKey: import.meta.env.VITE_GEMINI_API_KEY ? "***set***" : "MISSING",
+      model: GEMINI_MODEL
     });
     
     // Return user-friendly error message with more context
-    if (err.message.includes("Missing API key") || err.message.includes("gateway URL")) {
+    if (err.message.includes("Missing Gemini API key")) {
       return "Sorry, the AI service is not properly configured. Please check your API settings.";
     }
     
     // Network/CORS errors
     if (err.message.includes("Failed to fetch") || err.message.includes("NetworkError")) {
-      return "Network error: Could not reach the AI service. Please check your internet connection and gateway URL.";
+      return "Network error: Could not reach the AI service. Please check your internet connection.";
     }
     
     // API errors

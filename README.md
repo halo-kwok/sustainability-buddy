@@ -4,7 +4,9 @@
 ## Contributions
 
 **Halo**: Built the full-stack application end-to-end (frontend and backend), including the agentic AI backend integration with Duke's LiteLLM gateway for personalized sustainability coaching, and finalized the design implementation.
+
 **Kate**: Solidified the project concept and drove project direction through meeting organization.
+
 **Lara**: Researched design philosophy and contributed to web development tooling.
 
 ![Sustainability Buddy!](susbuddy-logo.png)
